@@ -1,4 +1,4 @@
-# Pliers
+# CBZpliers
 
 Pliers is a Python tool that helps you combine multiple `.cbz` (comic book archive) files into a single file.
 
@@ -7,7 +7,7 @@ Pliers is a Python tool that helps you combine multiple `.cbz` (comic book archi
 You will be able to install Pliers directly from PyPI:
 
 ```bash
-pip install pliers
+pip install CBZpliers
 ```
 ## Usage
 
