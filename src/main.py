@@ -1,7 +1,7 @@
 import argparse
 from pathlib import Path
 
-from pliers.pliers import combine_files
+from src.pliers import combine_files
 
 def main():
     parser = argparse.ArgumentParser(description="Combine multiple .cbz files into one.")

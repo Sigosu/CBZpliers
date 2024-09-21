@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="pliers",
+    name="CBZpliers",
     version="0.1.0",
     packages=find_packages(),
     install_requires=[
@@ -10,7 +10,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'combine_cbz=pliers.main:main',  # Command-line tool configuration
+            'combine_cbz=src.main:main',  # Command-line tool configuration
         ],
     },
     author="Szymon Sciegienka",
