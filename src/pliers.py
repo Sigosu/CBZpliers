@@ -55,7 +55,10 @@ def combine_chapters(input_path, output_path):
 def mod_xml(path, volume_name, series_name):
     pages = len(listdir(path))
     xmlpath = os.path.join(path, "ComicInfo.xml")
-    tree = ET.parse(xmlpath)
+    try:
+        tree = ET.parse(xmlpath)
+    except OSError:
+        return
     root = tree.getroot()
     title = root.find('Title')
     series = root.find('Series')
