@@ -26,35 +26,27 @@ def extract_zips(path, output):
             zip_ref.extractall(os.path.join(output, str(counter)))
         counter += 1
 
-def rename_jpgs(path):
-    outchapters = listdir(path)
-    prevcounter = 0
-    for directory in outchapters:
-        pngpath = os.path.join(path, directory)
-        pngs = listdir(pngpath)
-
-        if prevcounter == 0:
-            prevcounter = len(pngs) - 1
-        else:
-            os.remove(os.path.join(pngpath, "ComicInfo.xml"))
-            pngs.pop()
-            for index, filename in enumerate(pngs):
-                file_extension = os.path.splitext(filename)[1]
-                new_filename = f"{'000' + str(index + prevcounter + 1)}{file_extension}"
-
-                old_file_path = os.path.join(pngpath, filename)
-                new_file_path = os.path.join(pngpath, new_filename)
-                os.rename(old_file_path, new_file_path)
-
-            files = os.listdir(pngpath)
-            for filename in files:
-                new_filename = filename.replace('000', '')
-
-                old_file_path = os.path.join(pngpath, filename)
-                new_file_path = os.path.join(pngpath, new_filename)
-
-                os.rename(old_file_path, new_file_path)
-            prevcounter += len(pngs)
+def rename_pngs(path):
+    png_counter = 1
+    chapters = sorted(d for d in os.listdir(path) if os.path.isdir(os.path.join(path, d)))
+    
+    for chapter in chapters:
+        chapter_path = os.path.join(path, chapter)
+        print(chapter_path)
+        
+        for root, dirs, files in os.walk(chapter_path):
+            dirs.sort()
+            pngs = sorted(files)
+            
+            for png in pngs:
+                old_path = os.path.join(root,png)
+                
+                file_extension = os.path.splitext(png)[1]
+                new_name = f"{png_counter:0>10}{file_extension}"
+                new_path = os.path.join(root,new_name)
+                
+                os.rename(old_path,new_path)
+                png_counter += 1
 
 def combine_chapters(input_path, output_path):
     for directory in listdir(input_path):
@@ -63,7 +55,10 @@ def combine_chapters(input_path, output_path):
 def mod_xml(path, volume_name, series_name):
     pages = len(listdir(path))
     xmlpath = os.path.join(path, "ComicInfo.xml")
-    tree = ET.parse(xmlpath)
+    try:
+        tree = ET.parse(xmlpath)
+    except OSError:
+        return
     root = tree.getroot()
     title = root.find('Title')
     series = root.find('Series')
@@ -104,7 +99,7 @@ def combine_files(inpath, volume_title, series_title, m=False):
             extract_zips(os.path.join(temp_main, folder), outpath)
 
             print("Reorganizing pages...")
-            rename_jpgs(outpath)
+            rename_pngs(outpath)
 
             print("Combining chapters...")
             resultpath = os.path.join(temp_main, folder, "result")
@@ -134,7 +129,7 @@ def combine_files(inpath, volume_title, series_title, m=False):
             extract_zips(temp_main, outpath)
 
             print("Reorganizing pages...")
-            rename_jpgs(outpath)
+            rename_pngs(outpath)
 
             print("Combining chapters...")
             resultpath = os.path.join(temp_main,"result")

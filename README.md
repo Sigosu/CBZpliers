@@ -1,14 +1,10 @@
 # [CBZpliers](https://pypi.org/project/CBZpliers/)
 
-Pliers is a Python tool that helps you combine multiple `.cbz` (comic book archive) files into a single file.
+Pliers is a Python tool that helps you combine multiple `.cbz` (comic book archive) files into a single `.cbz` file.
 
 ## Installation
 
-You will be able to install Pliers directly from [PyPI](https://pypi.org/project/CBZpliers/):
-
-```bash
-pip install CBZpliers
-```
+You need to git clone `https://github.com/tchoupee/CBZpliers.git` and then in the same directory run ```bash pip install CBZpliers```
 ## Usage
 
 You can use the tool from command line
@@ -17,7 +13,7 @@ You can use the tool from command line
 combine_cbz <cbz_dir> <volume_title> <series_title>
 ```
 
-<cbz_dir> - path to the directory which contains the files you want to combine. It is necessary to have a separate directory, containing nothing BUT the .cbz files. This will also be the output directory.
+<cbz_dir> - path to the directory which contains the files you want to combine. It is necessary to have a separate directory, containing nothing BUT the .cbz files in desired alpha numerical order. This will also be the output directory.
 
 <volume_title> - name of the final .cbz file. If using ```-m```, this will work more like a naming format, i.e. if you use "vol", then the output files will be called vol1, vol2, vol3... 
 
